@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from database import Base
+from .database import Base
 
 class Asset(Base):
     __tablename__ = "assets"
