@@ -37,6 +37,9 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     db.refresh(new_employee)
     return new_employee
 
+@app.get("/employees", response_model=List[EmployeeResponse])
+def list_employees(db: Session = Depends(get_db)):
+    return db.query(models.Employee).all()
 
 @app.get("/")
 def root():
