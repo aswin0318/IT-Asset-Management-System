@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from . import models
 from .database import engine, get_db
-from .schemas import AssetCreate, AssetResponse
+from .schemas import AssetCreate, AssetResponse, EmployeeCreate, EmployeeResponse
 from sqlalchemy.orm import Session
 
 app = FastAPI(title="IT Asset Management System")
@@ -18,6 +18,19 @@ def create_asset(asset: AssetCreate, db:Session = Depends(get_db)):
     db.commit()
     db.refresh(new_asset)
     return new_asset
+
+@app.post("/employees", response_model=EmployeeResponse)
+def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
+    new_employee = models.Employee(
+        name=employee.name,
+        department=employee.department,
+        email=employee.email
+    )
+    db.add(new_employee)
+    db.commit()
+    db.refresh(new_employee)
+    return new_employee
+
 
 @app.get("/")
 def root():
