@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 class AssetCreate(BaseModel):
     asset_name: str
@@ -18,12 +18,12 @@ class AssetResponse(BaseModel):
 class EmployeeCreate(BaseModel):
     name: str
     department: str
-    email: str
+    email: EmailStr
 
 class EmployeeResponse(BaseModel):
     id: int
     name: str
     department: str
-    email: str
+    email: EmailStr
     class Config:
         orm_mode = True 
