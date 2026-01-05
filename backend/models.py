@@ -9,3 +9,11 @@ class Asset(Base):
     asset_type = Column(String, nullable=False)
     serial_number = Column(String, unique=True, nullable=False)
     status = Column(String, default="Available")
+
+class Employee(Base):
+    _tablename_ = "employees"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    department = Column(String, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
