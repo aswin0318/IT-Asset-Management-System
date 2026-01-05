@@ -14,3 +14,16 @@ class AssetResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class EmployeeCreate(BaseModel):
+    name: str
+    department: str
+    email: str
+
+class EmployeeResponse(BaseModel):
+    id: int
+    name: str
+    department: str
+    email: str
+    class Config:
+        orm_mode = True 
