@@ -11,7 +11,7 @@ class Asset(Base):
     status = Column(String, default="Available")
 
 class Employee(Base):
-    _tablename_ = "employees"
+    __tablename__ = "employees"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)

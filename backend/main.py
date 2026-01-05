@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import FastAPI, Depends
 from . import models
 from .database import engine, get_db
@@ -18,6 +19,11 @@ def create_asset(asset: AssetCreate, db:Session = Depends(get_db)):
     db.commit()
     db.refresh(new_asset)
     return new_asset
+
+@app.get("/assets", response_model=List[AssetResponse])
+def get_assets(db: Session = Depends(get_db)):
+    assets = db.query(models.Asset).all()
+    return assets
 
 @app.post("/employees", response_model=EmployeeResponse)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
