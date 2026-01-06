@@ -1,10 +1,10 @@
 from typing import List
 from fastapi import FastAPI, Depends, HTTPException
-import models
-from database import engine, get_db
-from schemas import AssetCreate, AssetResponse, EmployeeCreate, EmployeeResponse, AssignmentCreate, AssignmentResponse
+from . import models
+from .database import engine, get_db
+from .schemas import AssetCreate, AssetResponse, EmployeeCreate, EmployeeResponse, AssignmentCreate, AssignmentResponse
 from sqlalchemy.orm import Session
-from datetime import date
+from datetime import datetime, timezone
 
 app = FastAPI(title="IT Asset Management System")
 models.Base.metadata.create_all(bind=engine)
@@ -86,7 +86,7 @@ def return_asset(assignment_id: int, db: Session = Depends(get_db)):
     if assignment.returned_date is not None:
         raise HTTPException(status_code=400, detail="Asset already returned")
 
-    assignment.returned_date = date.today()
+    assignment.returned_date = datetime.now(timezone.utc)
 
     asset = db.query(models.Asset).filter(
         models.Asset.id == assignment.asset_id

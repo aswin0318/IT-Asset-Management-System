@@ -1,8 +1,8 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from datetime import date
+from datetime import datetime, timezone
 
-from database import Base
+from .database import Base
 
 class Asset(Base):
     __tablename__ = "assets"
@@ -33,8 +33,8 @@ class Assignment(Base):
     asset_id = Column(Integer, ForeignKey("assets.id"), nullable=False)
     employee_id = Column(Integer, ForeignKey("employees.id"), nullable=False)
 
-    assigned_date = Column(Date, default=date.today)
-    returned_date = Column(Date, nullable=True)
+    assigned_date = Column(DateTime, default=datetime.now(timezone.utc))
+    returned_date = Column(DateTime, nullable=True)
 
     asset = relationship("Asset", back_populates="assignments")
     employee = relationship("Employee", back_populates="assignments")
