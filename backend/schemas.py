@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import date
 
 class AssetCreate(BaseModel):
     asset_name: str
@@ -27,3 +28,18 @@ class EmployeeResponse(BaseModel):
     email: EmailStr
     class Config:
         orm_mode = True 
+
+class AssignmentCreate(BaseModel):
+    asset_id: int
+    employee_id: int
+
+
+class AssignmentResponse(BaseModel):
+    id: int
+    asset_id: int
+    employee_id: int
+    assigned_date: date
+    returned_date: date | None
+
+    class Config:
+        orm_mode = True
