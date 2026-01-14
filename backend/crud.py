@@ -9,7 +9,9 @@ def create_asset(db: Session, asset_data):
     asset = models.Asset(
         asset_name=asset_data.asset_name,
         asset_type=asset_data.asset_type,
-        serial_number=asset_data.serial_number
+        serial_number=asset_data.serial_number,
+        purchase_date=asset_data.purchase_date,
+        expiry_date=asset_data.expiry_date
     )
     db.add(asset)
     db.commit()

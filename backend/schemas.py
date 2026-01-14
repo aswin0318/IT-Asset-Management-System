@@ -5,6 +5,8 @@ class AssetCreate(BaseModel):
     asset_name: str
     asset_type: str
     serial_number: str
+    purchase_date : datetime
+    expiry_date : datetime
 
 class AssetResponse(BaseModel):
     id: int
@@ -12,9 +14,11 @@ class AssetResponse(BaseModel):
     asset_type: str
     serial_number: str
     status: str
+    purchase_date : datetime
+    expiry_date : datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True   #earlier orm_mode = True
 
 class EmployeeCreate(BaseModel):
     name: str
@@ -27,7 +31,7 @@ class EmployeeResponse(BaseModel):
     department: str
     email: EmailStr
     class Config:
-        orm_mode = True 
+        from_attributes = True
 
 class AssignmentCreate(BaseModel):
     asset_id: int
@@ -42,4 +46,4 @@ class AssignmentResponse(BaseModel):
     returned_date: datetime | None
 
     class Config:
-        orm_mode = True
+        from_attributes = True

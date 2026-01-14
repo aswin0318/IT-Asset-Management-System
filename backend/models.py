@@ -12,7 +12,8 @@ class Asset(Base):
     asset_type = Column(String, nullable=False)
     serial_number = Column(String, unique=True, nullable=False)
     status = Column(String, default="Available")
-
+    purchase_date = Column(DateTime(timezone=True),nullable=False)
+    expiry_date = Column(DateTime(timezone=True),nullable=False)
     assignments = relationship("Assignment", back_populates="asset")
 
 class Employee(Base):
