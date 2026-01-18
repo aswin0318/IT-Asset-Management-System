@@ -74,3 +74,7 @@ def expired_assets_pdf(db: Session = Depends(get_db)):
         media_type="application/pdf",
         filename="expired_assets_report.pdf"
     )
+
+@router.get("/active-assignments-detailed")
+def active_assignments_detailed(db: Session = Depends(get_db)):
+    return crud_reports.active_assignments_detailed(db)

@@ -85,3 +85,32 @@ def expired_assets_report(db: Session):
         }
         for row in rows
     ]
+
+def active_assignments_detailed(db: Session):
+    rows = (
+        db.query(
+            models.Assignment.id.label("assignment_id"),
+            models.Asset.asset_name,
+            models.Asset.serial_number,
+            models.Employee.name.label("employee_name"),
+            models.Employee.department,
+            models.Assignment.assigned_date,
+        )
+        .join(models.Asset, models.Assignment.asset_id == models.Asset.id)
+        .join(models.Employee, models.Assignment.employee_id == models.Employee.id)
+        .filter(models.Assignment.returned_date.is_(None))
+        .order_by(models.Assignment.assigned_date.desc())
+        .all()
+    )
+
+    return [
+        {
+            "assignment_id": r.assignment_id,
+            "asset_name": r.asset_name,
+            "serial_number": r.serial_number,
+            "employee_name": r.employee_name,
+            "department": r.department,
+            "assigned_date": r.assigned_date,
+        }
+        for r in rows
+    ]
