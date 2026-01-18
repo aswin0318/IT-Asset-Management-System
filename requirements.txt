@@ -5,3 +5,5 @@ pydantic
 streamlit
 requests
 pydantic[email]
+xhtml2pdf
+jinja2
