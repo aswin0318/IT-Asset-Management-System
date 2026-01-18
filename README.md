@@ -38,28 +38,29 @@ No database logic or report generation exists in the UI.
 
 ## How to Run the Project
 
-### 1. Clone the Repository
 ```bash
+# 1. Clone the repository
 git clone <your-repo-url>
 cd it-asset-management
 
-### 2. Create and Activate Virtual Environment
+# 2. Create and activate virtual environment (Windows)
 python -m venv venv
 venv\Scripts\activate
 
-### 3. Install Dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-### 4. Start the Backend (FastAPI)
+# 4. Start the FastAPI backend
 uvicorn backend.main:app --reload
 
-The API will be available at:
-http://127.0.0.1:8000
+# Backend will be available at:
+# http://127.0.0.1:8000
+# Swagger Docs:
+# http://127.0.0.1:8000/docs
 
-Swagger documentation:
-http://127.0.0.1:8000/docs
-
-### 5. Start the Frontend (Streamlit)
-Open a new terminal:
+# 5. Open a NEW terminal (keep backend running)
 cd streamlit_ui
+..\venv\Scripts\activate
+
+# 6. Start the Streamlit frontend
 streamlit run app.py
