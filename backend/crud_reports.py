@@ -63,27 +63,23 @@ def currently_assigned_assets(db: Session):
 
 def expired_assets_report(db: Session):
     now = datetime.now(timezone.utc)
-
     rows = (
         db.query(
             models.Asset.asset_name,
             models.Asset.serial_number,
             models.Asset.expiry_date,
-            models.Asset.status,
         )
         .filter(models.Asset.expiry_date < now)
-        .order_by(models.Asset.expiry_date)
         .all()
     )
-
     return [
         {
-            "asset_name": row.asset_name,
-            "serial_number": row.serial_number,
-            "expiry_date": row.expiry_date,
-            "status": row.status,
+            "asset_name": r.asset_name,
+            "serial_number": r.serial_number,
+            "expiry_date": r.expiry_date,
+            "status": "Expired"
         }
-        for row in rows
+        for r in rows
     ]
 
 def active_assignments_detailed(db: Session):
