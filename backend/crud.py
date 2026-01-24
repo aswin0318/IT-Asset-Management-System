@@ -56,7 +56,10 @@ def create_assignment(db: Session, data):
     ).first()
 
     if not employee:
-        return None, "employee_not_found"
+        return None, "employee_not_found" 
+    now = datetime.now(timezone.utc)
+    if asset.expiry_date < now:
+        return None, "asset_expired"
 
     if asset.status == "Assigned":
         return None, "asset_already_assigned"
@@ -73,6 +76,7 @@ def create_assignment(db: Session, data):
     db.refresh(assignment)
 
     return assignment, None
+
 
 def get_assignments(db: Session):
     return db.query(models.Assignment).all()
