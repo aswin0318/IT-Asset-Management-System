@@ -18,11 +18,24 @@ def create_asset(db: Session, asset_data):
     db.refresh(asset)
     return asset
 
+def mark_expired_assets(db: Session):
+    now = datetime.now(timezone.utc)
 
+    assets = db.query(models.Asset).filter(
+        models.Asset.status != "Expired"
+    ).all()
+
+    for asset in assets:
+        expiry = asset.expiry_date.replace(tzinfo=timezone.utc)
+
+        if expiry < now:
+            asset.status = "Expired"
+
+    db.commit()
 
 def get_assets(db: Session):
+    mark_expired_assets(db)
     return db.query(models.Asset).all()
-
 
 # Employee CRUD operations
 
@@ -58,7 +71,8 @@ def create_assignment(db: Session, data):
     if not employee:
         return None, "employee_not_found" 
     now = datetime.now(timezone.utc)
-    if asset.expiry_date < now:
+    expiry = asset.expiry_date.replace(tzinfo=timezone.utc)
+    if expiry < now:
         return None, "asset_expired"
 
     if asset.status == "Assigned":
